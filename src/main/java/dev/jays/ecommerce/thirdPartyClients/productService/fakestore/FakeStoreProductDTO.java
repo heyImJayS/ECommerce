@@ -1,4 +1,4 @@
-package dev.jays.ecommerce.dtos;
+package dev.jays.ecommerce.thirdPartyClients.productService.fakestore;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,5 +27,5 @@ public class FakeStoreProductDTO {
     private double price;
     private String category;
     private String description;
-    private String image;    //Normally URL is String
+    private String image;                   //Normally URL is String
 }

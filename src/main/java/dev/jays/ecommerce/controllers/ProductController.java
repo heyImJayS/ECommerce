@@ -30,8 +30,12 @@ public class ProductController  {
     public ProductController(@Qualifier("FakeStoreProductServiceImplementation") ProductService productService){
         this.productService=productService;
     }
-
-
+    /*
+    //Implementation of @Primary by without specifying @Qualifier
+    public ProductController(ProductService productService){
+        this.productService=productService;
+    }
+    */
     //Setter Injection (Not Recommended)
     //-------------------------------------------------
     /*
