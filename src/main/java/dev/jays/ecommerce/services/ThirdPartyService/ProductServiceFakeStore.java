@@ -1,12 +1,11 @@
-package dev.jays.ecommerce.services;
+package dev.jays.ecommerce.services.ThirdPartyService;
 
 import dev.jays.ecommerce.dtos.GenericProductDTO;
 import dev.jays.ecommerce.exceptions.NotFoundException;
-import dev.jays.ecommerce.models.Product;
 
 import java.util.List;
 
-public interface ProductService {
+public interface ProductServiceFakeStore {
     //Typically methods in the controllers are present in the Services. Because Controllers internally calls Service methods
 
     public GenericProductDTO getProductById(Long id) throws NotFoundException;

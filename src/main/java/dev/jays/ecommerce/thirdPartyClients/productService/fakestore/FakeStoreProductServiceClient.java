@@ -44,7 +44,6 @@ public class FakeStoreProductServiceClient implements ThirdPartyProductServiceCl
     private String getAllProductsRequestURL;
     private String deleteProductRequestURL;
 
-
     public  FakeStoreProductServiceClient(RestTemplateBuilder restTemplateBuilder ,
                                           @Value("${fakestore.api.url}") String fakeStoreApiURL,
                                           @Value("${fakestore.api.paths.product}") String fakeStoreProductApiPath){

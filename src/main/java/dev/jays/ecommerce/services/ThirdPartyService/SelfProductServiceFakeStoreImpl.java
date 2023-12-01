@@ -1,13 +1,12 @@
-package dev.jays.ecommerce.services;
+package dev.jays.ecommerce.services.ThirdPartyService;
 
 import dev.jays.ecommerce.dtos.GenericProductDTO;
-import dev.jays.ecommerce.models.Product;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service("SelfProductServiceImplementation")
-public class SelfProductServiceImpl implements ProductService{
+public class SelfProductServiceFakeStoreImpl implements ProductServiceFakeStore {
     @Override
     public GenericProductDTO getProductById(Long id) {
 

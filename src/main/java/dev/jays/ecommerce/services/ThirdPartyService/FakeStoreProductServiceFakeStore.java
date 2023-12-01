@@ -1,4 +1,4 @@
-package dev.jays.ecommerce.services;
+package dev.jays.ecommerce.services.ThirdPartyService;
 
 import dev.jays.ecommerce.dtos.GenericProductDTO;
 import dev.jays.ecommerce.exceptions.NotFoundException;
@@ -9,10 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-@Primary
 @Service("FakeStoreProductServiceImplementation")
-public class FakeStoreProductService implements ProductService {
+public class FakeStoreProductServiceFakeStore implements ProductServiceFakeStore {
 
     private GenericProductDTO convertFakeStoreProductDTOIntoGenericProductDTO( FakeStoreProductDTO fakeStoreProductDTO){
         GenericProductDTO product= new GenericProductDTO();
@@ -26,7 +24,7 @@ public class FakeStoreProductService implements ProductService {
     }
 
     private FakeStoreProductServiceClient fakeStoreProductServiceClient;
-    public  FakeStoreProductService(FakeStoreProductServiceClient fakeStoreProductServiceClient){
+    public FakeStoreProductServiceFakeStore(FakeStoreProductServiceClient fakeStoreProductServiceClient){
         this.fakeStoreProductServiceClient = fakeStoreProductServiceClient;
     }
 
@@ -48,6 +46,7 @@ public class FakeStoreProductService implements ProductService {
             res.add(convertFakeStoreProductDTOIntoGenericProductDTO(i));
         }
         return res;
+
     }
 
     @Override
