@@ -3,14 +3,22 @@ package dev.jays.ecommerce.controllers;
 
 import dev.jays.ecommerce.dtos.GenericProductDTO;
 import dev.jays.ecommerce.exceptions.NotFoundException;
+import dev.jays.ecommerce.response.ApiEntity;
+import dev.jays.ecommerce.response.ApiResponseObject;
+import dev.jays.ecommerce.security.JwtObject;
+import dev.jays.ecommerce.security.TokenValidator;
 import dev.jays.ecommerce.services.ProductServiceSelf;
 import dev.jays.ecommerce.services.ThirdPartyService.ProductServiceFakeStore;
+import jakarta.annotation.Nullable;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 // This productController going to implement REST APIs. So we add the Annotation @RestController
@@ -20,14 +28,19 @@ public class ProductController  {
      //Field Injection
     //--------------------------------------------------------------
     //@Autowired  <- This Annotation will autometically inject over variable/field which is not recommended
+    @Qualifier("ProductServiceSelfImplementation")
     private ProductServiceSelf productServiceSelf;
 
+    @Autowired
+    private TokenValidator tokenValidator;
 
     //Constructor Injection
     //---------------------------------------------------------
     //Here we are injecting the dependency via constructor
     //@Qualifier Annotation specifies which class object. Because there are two implementations of ProductService Interface
-    public ProductController(@Qualifier("ProductServiceImplementation") ProductServiceSelf productServiceSelf){
+    //This qualifier throwing error while MVC API testing.. so we need to remove it @Qualifier annotation
+    // Ref (4th point read):- https://www.w3docs.com/snippets/java/field-required-a-bean-of-type-that-could-not-be-found-error-spring-restful-api-using-mongodb.html
+    public ProductController( /* @Qualifier("ProductServiceSelfImplementation") */ ProductServiceSelf productServiceSelf){
         this.productServiceSelf = productServiceSelf;
     }
     /*
@@ -46,15 +59,31 @@ public class ProductController  {
     */
 
     @GetMapping   //  /products
-    public List<GenericProductDTO> getALLProducts(){
-        return productServiceSelf.getAllProducts();
+    public ResponseEntity<List<GenericProductDTO>> getALLProducts(){
+        List<GenericProductDTO> allProducts = productServiceSelf.getAllProducts();
+        if(allProducts.isEmpty()){
+            return new ResponseEntity<>(allProducts, HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(allProducts, HttpStatus.OK);
 
     }
     //localhost:8080/products/{id}   <- URL  where 243 is ProductID
     //We mention variables inside curly braces
     @GetMapping("{id}")    //If we had not written ("/products") in annotation  -> @RequestMapping("/products") then we have to mention here like @GetMapping("/products/{id}")
-    public GenericProductDTO getProductByID(@PathVariable("id")UUID uuid) throws NotFoundException{      //@PathVariable says that the id in "Long id" is nothing but same id in Path URL.
-        return productServiceSelf.getProductById(uuid);
+    public ResponseEntity<ApiResponseObject> getProductByID(@PathVariable("id")UUID uuid) throws NotFoundException{      //@PathVariable says that the id in "Long id" is nothing but same id in Path URL.
+
+        String message = "";
+        HttpHeaders httpHeaders = new HttpHeaders();
+        HttpStatus status= HttpStatus.OK;
+        try{
+            message = "Success access";
+            GenericProductDTO product= productServiceSelf.getProductById(uuid);
+            return new ResponseEntity<ApiResponseObject>(new ApiEntity<GenericProductDTO>(message, product),httpHeaders,status);
+        }
+        catch(Exception e){
+            return new ResponseEntity<ApiResponseObject>(new ApiEntity<GenericProductDTO>(e.getMessage()),httpHeaders, status);
+        }
+
     }
 
     @DeleteMapping("{id}")           //   /products/{id}
