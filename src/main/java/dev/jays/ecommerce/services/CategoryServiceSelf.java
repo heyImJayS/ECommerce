@@ -11,4 +11,5 @@ public interface CategoryServiceSelf {
     public List<String> getProductTitles(String uuid);
     public List<String> getAllCategoryProductTitles(List<String> categoryUUIDs);
     public List<GenericCategoryDTO> getAllCategories();
+    public List<Category> getAllCategoriesByName(String name);
 }

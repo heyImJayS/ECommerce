@@ -1,10 +1,14 @@
 package dev.jays.ecommerce.repositories;
 
+import dev.jays.ecommerce.dtos.GenericProductDTO;
 import dev.jays.ecommerce.models.Category;
 import dev.jays.ecommerce.models.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,9 +25,10 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     //This will find and return the product with Title titl
     Product findByTitleEquals(String titl);
     //This will find and return the Product having Title titl
-    Product findByTitleEqualsAndCurrency_CountryCurrencyEquals(String titl, String currency);   //Price is the Object attribute inside Title Class. Underscore specifies the attribute inside Price Object
+
+    //Product findByTitleEqualsAndCurrency_CountryCurrencyEquals(String titl, String currency);   //Price is the Object attribute inside Title Class. Underscore specifies the attribute inside Price Object
     //This will find all the Products with provided currency
-    List<Product> findAllByCurrency_CountryCurrency(String currency);
+    //List<Product> findAllByCurrency_CountryCurrency(String currency);
 
     //Customized Query self query
     //@Query <- Says that Spring JPA won't act upon the function. You can specify your own customized query.
@@ -49,7 +54,12 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     //This will give all the Products in the Product Repository
     @Override
     List<Product> findAll();
-
     @Override
     Optional<Product> findById(UUID uuid);
+    //@Query(value ="select * from product where price BETWEEN (:startPrice, :endPrice)", nativeQuery = true)
+    @Query(value = "SELECT * FROM product WHERE price BETWEEN :startPrice AND :endPrice", nativeQuery = true)
+    Page<Product> findProductInPriceRange(@Param("startPrice") Double startPrice,
+                                     @Param("endPrice") Double endPrice,
+                                     Pageable pageable);
+
 }

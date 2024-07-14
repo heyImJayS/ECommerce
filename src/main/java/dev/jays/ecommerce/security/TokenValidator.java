@@ -21,7 +21,6 @@ public class TokenValidator {
      */
     public Optional<JwtObject> validateToken(String token) {
         RestTemplate restTemplate = restTemplateBuilder.build();
-
         return Optional.empty();
     }
 }

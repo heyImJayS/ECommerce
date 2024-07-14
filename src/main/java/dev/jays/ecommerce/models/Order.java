@@ -28,6 +28,5 @@ public class Order extends BaseModel{
     //joinColumns => current Class Id name
     //inverseJoinColumns => Joining table Id name
     private List<Product> products;
-
 }
 

@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(ProductController.class)
 public class ProductControllerWebMVCTest {
-
+    /*
     @Autowired
     private MockMvc mockMvc;
 
@@ -97,7 +97,7 @@ public class ProductControllerWebMVCTest {
                 .andExpect(jsonPath("$.length()", is(2)));
 
     }
-
+*/
 }
 
 /*

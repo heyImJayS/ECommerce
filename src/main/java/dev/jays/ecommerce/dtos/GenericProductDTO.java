@@ -1,5 +1,6 @@
 package dev.jays.ecommerce.dtos;
 
+import dev.jays.ecommerce.models.Product;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -18,4 +19,16 @@ public class GenericProductDTO {
     private String category;
     private String description;
     private String image;    //Normally URL is String
+
+    public static GenericProductDTO convertProductToGenericProductDTO(Product product){
+        GenericProductDTO genericProductDTO= new GenericProductDTO();
+        if(product.getCategory()!=null){
+            genericProductDTO.setCategory(product.getCategory().getName());
+        }
+        genericProductDTO.setTitle(product.getTitle());
+        genericProductDTO.setPrice(product.getPrice());
+        genericProductDTO.setImage(product.getImage());
+        genericProductDTO.setDescription(product.getDescription());
+        return genericProductDTO;
+    }
 }

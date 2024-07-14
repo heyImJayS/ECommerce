@@ -4,6 +4,7 @@ import dev.jays.ecommerce.dtos.GenericCategoryDTO;
 import dev.jays.ecommerce.dtos.GenericProductDTO;
 import dev.jays.ecommerce.dtos.GetProductTitleRequestDTO;
 import dev.jays.ecommerce.dtos.ProductDto;
+import dev.jays.ecommerce.models.Category;
 import dev.jays.ecommerce.models.Product;
 import dev.jays.ecommerce.services.CategoryServiceSelf;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,6 +42,15 @@ public class CategoryController {
     @GetMapping
     List<GenericCategoryDTO> getAllCategories(){
         return categoryServiceSelf.getAllCategories();
+    }
+
+    @GetMapping("/findCategory")
+    public Category getCategoryByName(@RequestParam(value="categoryName", required = false) String categoryName){
+        List<Category> result= categoryServiceSelf.getAllCategoriesByName(categoryName);
+        if(!result.isEmpty()){
+            return result.get(0);
+        }
+        return null;
     }
 
 }

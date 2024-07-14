@@ -1,12 +1,7 @@
 package dev.jays.ecommerce;
 
-import dev.jays.ecommerce.models.Category;
-import dev.jays.ecommerce.models.Currency;
-import dev.jays.ecommerce.models.Product;
 import dev.jays.ecommerce.repositories.CategoryRepository;
-import dev.jays.ecommerce.repositories.CurrencyRepository;
 import dev.jays.ecommerce.repositories.ProductRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -16,14 +11,11 @@ public class ECommerceApplication implements CommandLineRunner {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-    private final CurrencyRepository currencyRepository;
 
     public ECommerceApplication(ProductRepository productRepository,
-                                CategoryRepository categoryRepository,
-                                CurrencyRepository currencyRepository) {
+                                CategoryRepository categoryRepository){
         this.productRepository = productRepository;
         this.categoryRepository = categoryRepository;
-        this.currencyRepository = currencyRepository;
     }
     //@Transactional()
     //@Override

@@ -1,11 +1,12 @@
 package dev.jays.ecommerce.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
-
+@Getter
 @MappedSuperclass
 public class BaseModel {
     //Non-UUID autoincrement Integral Primary key

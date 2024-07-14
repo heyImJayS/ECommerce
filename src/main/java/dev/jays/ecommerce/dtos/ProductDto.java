@@ -1,6 +1,5 @@
 package dev.jays.ecommerce.dtos;
 
-import dev.jays.ecommerce.models.Currency;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
@@ -15,8 +14,8 @@ public class ProductDto {
     private String description;
     private String image;    //We store URL of the image
 
-    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
-    private Currency currency;
+    //@OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE})
+    private String currency;
 
     private double price;
 }

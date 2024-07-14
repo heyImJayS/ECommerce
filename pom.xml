@@ -14,9 +14,10 @@
     <name>ECommerce</name>
     <description>ECommerce</description>
     <properties>
-        <java.version>17</java.version>
+        <java.version>21</java.version>
     </properties>
     <dependencies>
+
         <!-- FlyWay Dependency for Database Migration -->
         <dependency>
             <groupId>org.flywaydb</groupId>
@@ -24,10 +25,19 @@
             <version>9.22.3</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-oauth2-resource-server -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-security</artifactId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+
+        <!-- this is or checking the health of the application. This will create endpoints to check app health
+        Ex: http://localhost:3000/actuator/health
+        -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-actuator -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
             <version>3.3.0</version>
         </dependency>
 

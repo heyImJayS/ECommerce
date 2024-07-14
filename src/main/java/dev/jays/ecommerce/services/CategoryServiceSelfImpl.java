@@ -42,7 +42,7 @@ public class CategoryServiceSelfImpl implements CategoryServiceSelf {
         List<Product> products = category.getProducts();
         List<GenericProductDTO> res= new ArrayList<>();
         for(Product product: products){
-            res.add(ProductServiceSelfImpl.convertProductToGenericProductDTO(product));
+            res.add(GenericProductDTO.convertProductToGenericProductDTO(product));
         }
         return res;
     }
@@ -100,5 +100,10 @@ public class CategoryServiceSelfImpl implements CategoryServiceSelf {
             res.add(convertCategoryToGenericCategoryDTO(category));
         }
         return res;
+    }
+
+    @Override
+    public List<Category> getAllCategoriesByName(String name) {
+        return categoryRepository.findByNameEqualsIgnoreCase(name);
     }
 }

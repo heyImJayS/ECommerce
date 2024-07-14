@@ -2,8 +2,6 @@ package dev.jays.ecommerce.models;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 
 @Getter
 @Setter
@@ -13,9 +11,14 @@ import org.hibernate.annotations.FetchMode;
 @Entity
 public class Product extends BaseModel{
     private String title;
+
+    @Column(length = 4000)
+    @Lob
     private String description;
+
     private String image;    //We store URL of the image
     private double price;
+    private String brand;
 
     // Product :  Category
     // P -> C =>  1   :    1        <- One product can have one category
@@ -31,7 +34,8 @@ public class Product extends BaseModel{
     // Product -> price => 1 : 1   //A product have one price tag
     // Product <- Price => 1 : 1   //For a price there can be one product
 
-    @OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE}, fetch= FetchType.LAZY)
-    @Fetch(FetchMode.JOIN)
-    private Currency currency;
+    //@OneToOne(cascade= {CascadeType.PERSIST, CascadeType.REMOVE}, fetch= FetchType.LAZY)
+    //@Fetch(FetchMode.JOIN)
+    private String currency;
+    private String availability;
 }

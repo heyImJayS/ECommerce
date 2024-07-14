@@ -3,6 +3,7 @@ package dev.jays.ecommerce.controllers;
 
 import dev.jays.ecommerce.dtos.GenericProductDTO;
 import dev.jays.ecommerce.exceptions.NotFoundException;
+import dev.jays.ecommerce.models.Product;
 import dev.jays.ecommerce.response.ApiEntity;
 import dev.jays.ecommerce.response.ApiResponseObject;
 import dev.jays.ecommerce.security.JwtObject;
@@ -17,6 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -43,28 +45,38 @@ public class ProductController  {
     public ProductController( /* @Qualifier("ProductServiceSelfImplementation") */ ProductServiceSelf productServiceSelf){
         this.productServiceSelf = productServiceSelf;
     }
-    /*
+/*
     //Implementation of @Primary by without specifying @Qualifier
     public ProductController(ProductService productService){
         this.productService=productService;
     }
-    */
+*/
     //Setter Injection (Not Recommended)
     //-------------------------------------------------
-    /*
+/*
     @Autowired
     public void setProductService(ProductService productService){
         this.productService= productService;
     }
-    */
+*/
 
     @GetMapping   //  /products
-    public ResponseEntity<List<GenericProductDTO>> getALLProducts(){
-        List<GenericProductDTO> allProducts = productServiceSelf.getAllProducts();
-        if(allProducts.isEmpty()){
-            return new ResponseEntity<>(allProducts, HttpStatus.NOT_FOUND);
+    public ResponseEntity<ApiResponseObject> getALLProducts(){
+        List<GenericProductDTO> allProducts = new ArrayList<>();
+        String message;
+        try {
+            allProducts = productServiceSelf.getAllProducts();
+            if (allProducts.isEmpty()) {
+                message= "No products available";
+                return new ResponseEntity<ApiResponseObject>(new ApiEntity<List<GenericProductDTO>>(message), HttpStatus.NOT_FOUND);
+            }else{
+                return new ResponseEntity<ApiResponseObject>(new ApiEntity<List<GenericProductDTO>>(allProducts), HttpStatus.OK);
+            }
+        }catch(Exception e){
+            message= e.getMessage();
+            return new ResponseEntity<ApiResponseObject>(new ApiEntity<>(message), HttpStatus.OK);
         }
-        return new ResponseEntity<>(allProducts, HttpStatus.OK);
+
 
     }
     //localhost:8080/products/{id}   <- URL  where 243 is ProductID
@@ -97,7 +109,7 @@ public class ProductController  {
     //As we know, while creating a product, client need to give product body in the request. So, @RequestBody annotation used.
     //@RequestBody says whatever is the request ...please convert that JSON to GenericProductDTO
     @PostMapping                     //  /products/
-    public GenericProductDTO createProduct(@RequestBody GenericProductDTO product){   //We took GenericProductDTO because the Output of the API have same attributes as GenericProductDTO
+    public GenericProductDTO createProduct(@RequestBody Product product){   //We took GenericProductDTO because the Output of the API have same attributes as GenericProductDTO
         /*
         fetch('https://fakestoreapi.com/products',{
                 method:"POST",

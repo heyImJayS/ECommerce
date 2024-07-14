@@ -1,5 +1,6 @@
 package dev.jays.ecommerce.models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToMany;
@@ -24,7 +25,7 @@ public class Category extends BaseModel{
     // C -> P => 1 : M
     // P -> C => 1 : 1
     // 1 : M
-    @OneToMany(mappedBy = "category")    //Mapped By used to tell that, there exist same relation with entity named 'category' in other class(Product). So, Do not consider as two different relations, both are same.
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)    //Mapped By used to tell that, there exist same relation with entity named 'category' in other class(Product). So, Do not consider as two different relations, both are same.
     @Fetch(FetchMode.SELECT)
     private List<Product> products;
 }
